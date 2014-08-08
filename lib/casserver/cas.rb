@@ -288,7 +288,7 @@ module CASServer::CAS
     else
       query_separator = "?"
     end
-
+    service.gsub!(/#(.*)+/, '')
     service_with_ticket = service + query_separator + "ticket=" + st.ticket
     service_with_ticket
   end
