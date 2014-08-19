@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 gemspec
 
-
+gem 'mysql2'
 # Gems for authenticators
 group :ldap do
     gem "net-ldap", "~> 0.1.1"

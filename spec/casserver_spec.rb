@@ -67,6 +67,17 @@ describe 'CASServer' do
       page.current_url.should_not =~ /^#{Regexp.escape("http://badguy.com##{@target_service}")}\/?\?ticket=ST\-[1-9rA-Z]+/
     end
 
+    it "does not redirect to non target service 2" do
+      visit "/login?service="+CGI.escape("http://badguy.com")
+
+      fill_in 'username', :with => VALID_USERNAME
+      fill_in 'password', :with => VALID_PASSWORD
+
+      click_button 'login-submit'
+
+      page.current_url.should_not =~ /^#{Regexp.escape("http://badguy.com")}\/?\?ticket=ST\-[1-9rA-Z]+/
+    end
+
     it "preserves target service after invalid login" do
       visit "/login?service="+CGI.escape(@target_service)
 
