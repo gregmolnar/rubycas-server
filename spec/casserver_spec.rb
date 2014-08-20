@@ -92,8 +92,17 @@ describe 'CASServer' do
       #page.should have_xpath("<script>alert(32)</script>")
     end
 
-  end # describe '/login'
+    it "does not redirect to not allowed service" do
+      visit "/login?service="+CGI.escape("http://badguy.com")
 
+      fill_in 'username', :with => VALID_USERNAME
+      fill_in 'password', :with => VALID_PASSWORD
+
+      click_button 'login-submit'
+      page.current_url.should_not =~ /^#{Regexp.escape("http://badguy.com")}\/?\?ticket=ST\-[1-9rA-Z]+/
+    end
+
+  end # describe '/login'
 
   describe '/logout' do
     describe 'user logged in' do

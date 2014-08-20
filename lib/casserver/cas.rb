@@ -316,8 +316,12 @@ module CASServer::CAS
 
     $LOG.debug("Cleaned dirty service URL #{dirty_service.inspect} to #{clean_service.inspect}") if
       dirty_service != clean_service
-
-    return clean_service
+    allowed_hosts = settings.config[:allowed_service_hosts] rescue []
+    if allowed_hosts.include? clean_service
+      return clean_service
+    else
+      return '/'
+    end
   end
   module_function :clean_service_url
 
